@@ -1,0 +1,463 @@
+/* Reset - Values changed to use a more specific font stack */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*
+ * Updated Custom Properties (Sleek/Modern Palette & Defined Shadows)
+ * Only the values are changed.
+ */
+:root {
+    /* Colors */
+    --color-primary: #f0b400; /* Warm Gold */
+    --font-sans: 'Avenir', 'Futura', sans-serif; /* Geometric Sans-Serif font stack */
+
+    --primary-color: #f0b400; /* Warm Gold */
+    --primary-dark: #d49400;  /* Darker Gold */
+    --secondary-color: #9a67ea; /* Deep Violet Accent */
+    --accent-color: #ff4d4d;  /* Vibrant Red-Orange for Alerts */
+    --background-light: #1e1e1e; /* Dark Charcoal Page BG */
+    --background-white: #2c2c2c; /* Darker Surface/Card BG */
+    --text-primary: #ffffff; /* Pure White */
+    --text-secondary: #b3b3b3; /* Light Gray Text */
+    --text-muted: #7a7a7a; /* Muted Gray */
+    --border-color: #4a4a4a; /* Subtle Dark Border */
+    
+    /* Shadows - Adjusted for a much softer, ambient glow suitable for dark mode */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 10px -3px rgba(0, 0, 0, 0.7), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 20px -5px rgba(0, 0, 0, 0.8), 0 6px 10px -4px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 30px 60px -15px rgba(0, 0, 0, 0.9); /* Deepest shadow */
+    
+    /* Spacing & Radius */
+    --border-radius: 6px; /* Slightly softer modern corners */
+    --border-radius-sm: 3px; /* Minimal radius for buttons */
+    
+    /* Transition - Slightly smoother */
+    --transition: all 0.2s ease-in-out;
+
+    /* NEW TOKENS - Values adjusted for dark theme consistency */
+    --fs-base: 17px; /* Medium base font size */
+    --fs-scale: 1.06rem; /* Adjusted scale unit */
+    --color-bg: #1e1e1e; /* Matched Dark Charcoal */
+    --color-surface: #2c2c2c; /* Matched Dark Surface */
+    --color-text: #ffffff; /* Matched Pure White */
+    --radius: 8px; 
+    --gap: 1.5rem; /* Slightly smaller primary gap */
+}
+
+/* Body - Only values changed */
+body{
+    font-family: var(--font-sans);
+    
+    margin: 0;
+    font-family: var(--font-sans); /* Changed font stack value */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--background-light); /* Changed background value to solid dark color */
+    color: var(--text-secondary); /* Used secondary text color */
+    line-height: 1.7; /* Looser line-height for dark mode readability */
+    min-height: 100vh;
+
+}
+
+/* Code - Only values changed */
+code {
+    font-family: 'Fira Code', 'Roboto Mono', monospace; /* Changed font stack value */
+    background-color: #383838; /* Medium dark gray code background */
+    padding: 5px 10px; /* Increased padding */
+    border-radius: 5px; /* Softer radius */
+    font-size: 0.8em; /* Slightly smaller font size */
+}
+
+/* Uphome - Only values changed */
+.uphome {
+    background: transparent;
+    width: 100%;
+    max-width: 1080px; /* Reduced max width */
+    margin: 0 auto;
+    padding: 0 1.75rem; /* Adjusted padding */
+}
+
+/* Modern button styles - Only values changed */
+.btn-primary {
+    background: var(--primary-color); /* Used lighter Gold color */
+    color: var(--text-primary); /* Used White text */
+    border: none;
+    padding: 14px 28px; /* Larger padding */
+    border-radius: var(--border-radius); /* Used main radius */
+    font-weight: 700; /* Bolder font weight */
+    font-size: 1rem; /* Adjusted font size */
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm); /* Used subtle shadow */
+}
+
+.btn-primary:hover {
+    transform: translateY(-4px); /* Increased movement */
+    box-shadow: var(--shadow-md); /* Use medium shadow on hover */
+    background: var(--primary-dark); /* Used darker Gold on hover */
+}
+
+.btn-secondary {
+    background: var(--background-white);
+    color: var(--primary-color); /* Used Gold color for text */
+    border: 1px solid var(--primary-dark); /* Gold border */
+    padding: 13px 27px; /* Adjusted padding to match primary */
+    border-radius: var(--border-radius); /* Used main radius */
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-dark); /* Darker Gold on hover */
+    transform: scale(0.98); /* Subtle squeeze movement */
+    box-shadow: var(--shadow-sm); /* Added subtle shadow on hover */
+}
+
+/* Card styles - Only values changed */
+.card {
+    background: var(--background-white);
+    border-radius: var(--radius); /* Used larger radius */
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--border-color); /* Used dark border variable */
+    padding: 40px; /* Increased padding value */
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px); /* Much more dynamic lift */
+}
+
+/* Typography improvements - Only values changed */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 900; /* Extra extra bold headings */
+    line-height: 1.1; /* Tighter line height */
+    margin-bottom: 0.8em; /* Increased bottom margin */
+}
+
+h1 {
+    font-size: 3.5rem; /* Larger font size */
+    background: linear-gradient(70deg, var(--primary-color), var(--secondary-color)); /* New gradient angle and Gold/Violet colors */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 2.6rem; /* Larger font size */
+}
+
+h3 {
+    font-size: 2rem; /* Larger font size */
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1.8rem; /* Increased bottom margin for better spacing */
+}
+
+/* Responsive design - Only values changed */
+@media (max-width: 992px) { /* Changed breakpoint value */
+    .uphome {
+        padding: 0 1.5rem;
+    }
+    
+    h1 {
+        font-size: 3rem; /* Adjusted responsive font size */
+    }
+    
+    h2 {
+        font-size: 2.2rem; /* Adjusted responsive font size */
+    }
+}
+
+/* --- Modernized design tokens added by assistant --- */
+:root{
+    --fs-base: 17px; /* Matched base font size */
+    --fs-scale: 1.06rem; /* Matched scale unit */
+    --color-bg: #1e1e1e; /* Matched Dark Charcoal */
+    --color-surface: #2c2c2c; /* Matched Dark Surface */
+    --color-primary: #f0b400; /* Matched Gold */
+    --color-accent: #9a67ea; /* Matched Violet */
+    --color-text: #ffffff; /* Matched Pure White */
+    --radius: 8px; /* Matched radius */
+    --gap: 1.5rem; /* Matched gap */
+    --font-sans: 'Avenir', 'Futura', sans-serif; /* Matched font stack */
+}
+
+/* Modern Navigation Styles - Only values changed */
+.all {
+    background: var(--background-white); /* Dark surface background */
+    box-shadow: var(--shadow-lg); /* Deep shadow for elevation */
+    border-radius: var(--radius); /* Larger radius */
+    margin: 1.5rem 0 3rem 0; /* Increased vertical margin */
+    padding: 1.25rem 2.5rem; /* Increased padding */
+    position: sticky;
+    top: 1.5rem; /* Stick further from top */
+    z-index: 100;
+    backdrop-filter: blur(4px); /* Reduced blur for dark mode */
+    border: 2px solid var(--border-color); /* Thicker border */
+}
+
+#profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 4.5rem; /* Shifted down */
+    right: 0;
+    background: var(--background-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius); /* Used main border radius */
+    box-shadow: var(--shadow-xl); /* Deepest shadow */
+    min-width: 220px; /* Wider dropdown */
+    z-index: 1000;
+    overflow: hidden;
+}
+
+#profile-dropdown a {
+    display: block;
+    padding: 14px 20px; /* Increased padding */
+    text-decoration: none;
+    color: var(--text-secondary); /* Light gray link text */
+    transition: var(--transition);
+    font-weight: 600; /* Bolder font weight */
+    border-bottom: 1px solid var(--border-color);
+}
+
+#profile-dropdown a:last-child {
+    border-bottom: none;
+}
+
+#profile-dropdown a:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color)); /* Gold gradient hover */
+    color: var(--text-primary); /* Pure white text */
+    transform: translateX(6px); /* More noticeable slide */
+}
+
+.nav_logo {
+    height: 3rem; /* Slightly smaller logo */
+    width: auto;
+    border-radius: var(--border-radius); /* Used main border radius */
+    transition: var(--transition);
+}
+
+.nav_logo:hover {
+    transform: scale(1.08); /* More noticeable hover scale */
+}
+
+.Nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.linksection {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Increased gap between links */
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: center;
+}
+
+.navlink {
+    color: var(--text-secondary); /* Light gray default text */
+    text-decoration: none;
+    padding: 12px 24px; /* Increased padding */
+    border-radius: var(--border-radius); /* Used main border radius */
+    font-weight: 700; /* Bolder font weight */
+    font-size: 1rem; /* Slightly larger font size */
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.navlink::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); /* Gold to Violet vertical gradient */
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.navlink:hover::before,
+.navlink.active::before {
+    left: 0;
+}
+
+.navlink:hover,
+.navlink.active {
+    color: var(--text-primary); /* Pure white text on hover */
+    transform: translateY(-1px); /* Subtle lift */
+    box-shadow: 0 0 15px rgba(240, 180, 0, 0.4); /* Custom subtle gold glow shadow */
+}
+
+.sign_out_btn {
+    background: var(--secondary-color); /* Solid Violet secondary color */
+    color: white;
+    border: none;
+    padding: 12px 24px; /* Match link padding */
+    border-radius: var(--border-radius); /* Use main border radius */
+    font-weight: 700; /* Bolder weight */
+    font-size: 0.95rem; /* Slightly larger font size */
+    cursor: pointer;
+    transition: var(--transition);
+    margin-left: 2rem; /* More margin on the left */
+}
+
+.sign_out_btn:hover {
+    transform: translateY(-3px); /* Increased lift */
+    box-shadow: var(--shadow-lg); /* Deeper shadow on hover */
+    background: var(--primary-color); /* Solid Gold on hover */
+}
+
+.avatar {
+    margin-left: 1.5rem !important; /* Increased margin */
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color)) !important; /* Dark Gold to Violet gradient */
+    cursor: pointer;
+    transition: var(--transition) !important;
+    position: relative;
+}
+
+.avatar:hover {
+    transform: scale(1.05); /* More subtle hover scale */
+    box-shadow: var(--shadow-md);
+}
+
+.avatar_text {
+    color: white !important;
+    font-weight: 800; /* Extra bold */
+    font-size: 0.95rem; /* Slightly larger */
+}
+
+.icon_container {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Increased gap */
+    position: relative;
+}
+
+.cart_icon {
+    width: 2.5rem !important; /* Larger icons */
+    height: 2.5rem !important; /* Larger icons */
+    color: var(--text-secondary); /* Default to light gray text */
+    transition: var(--transition);
+    cursor: pointer;
+    padding: 0.4rem; /* Increased padding */
+    border-radius: var(--border-radius); /* Used main radius */
+}
+
+.cart_icon:hover {
+    color: var(--primary-color); /* Gold hover color */
+    background: #444444; /* Darker gray hover background */
+    transform: scale(1.08); /* Subtle scale */
+}
+
+.like_icon {
+    width: 2.5rem !important; /* Larger icons */
+    height: 2.5rem !important; /* Larger icons */
+    color: var(--text-secondary); /* Default to light gray text */
+    transition: var(--transition);
+    cursor: pointer;
+    padding: 0.4rem; /* Increased padding */
+    border-radius: var(--border-radius); /* Used main radius */
+}
+
+.like_icon:hover {
+    color: var(--accent-color); /* Red-Orange accent color */
+    background: #4d3030; /* Dark red hover background */
+    transform: scale(1.08); /* Subtle scale */
+}
+
+/* Mobile responsive - Only values changed */
+@media (max-width: 768px) {
+    .all {
+        padding: 1rem 1.5rem; /* Adjusted padding */
+        margin: 1rem 0 2rem 0; /* Adjusted margin */
+    }
+    
+    .linksection {
+        flex-direction: column;
+        gap: 0.5rem; /* Increased gap */
+        align-items: stretch;
+    }
+    
+    .navlink {
+        padding: 10px 20px; /* Adjusted padding */
+        text-align: center;
+        font-size: 0.95rem; /* Adjusted font size */
+    }
+    
+    .sign_out_btn {
+        margin-left: 0;
+        margin-top: 1rem; /* Increased margin */
+    }
+    
+    .icon_container {
+        justify-content: center;
+        margin-top: 1rem; /* Increased margin */
+        margin-left: 0;
+    }
+    
+    .nav_logo {
+        height: 2.5rem; /* Smaller logo on mobile */
+    }
+    
+    #profile-dropdown {
+        right: 0.5rem; /* Closer to edges */
+        left: 0.5rem; /* Closer to edges */
+        width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .Nav {
+        flex-direction: column;
+        gap: 1.5rem; /* Increased gap */
+    }
+    
+    .linksection {
+        width: 100%;
+    }
+}
+
+body{
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: 1.7; /* Looser line height */
+    background: var(--background-light); /* Solid dark background */
+    color: var(--text-secondary);
+    margin:0;
+    padding:0;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+
+
+.btn{
+    display:inline-block;
+    padding:0.75rem 1.5rem; /* Adjusted padding */
+    border-radius: var(--border-radius); /* Used main radius variable */
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); /* Gold/Violet gradient */
+    color: var(--text-primary); /* Pure white text */
+    border:none;
+    cursor:pointer;
+    transition: transform .2s ease-in-out, box-shadow .2s ease-in-out, opacity .2s ease-in-out; /* Adjusted transition values */
+    box-shadow: 0 6px 15px rgba(240, 180, 0, 0.4); /* Gold shadow */
+    text-decoration:none;
+}
+.btn:hover{ transform: translateY(-5px); opacity:1; } /* Increased movement */
+.btn:active{ transform: translateY(-2px); }

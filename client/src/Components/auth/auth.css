@@ -1,0 +1,474 @@
+/* Reset - Values changed to use a more specific font stack */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*
+ * Updated Custom Properties (Sleek/Modern Palette & Defined Shadows)
+ * Only the values are changed.
+ */
+:root {
+    /* Colors */
+    --color-primary: #1a73e8; /* Deep Google Blue */
+    --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* Modern Sans-Serif font stack */
+
+    --primary-color: #4285f4; /* Lighter Blue */
+    --primary-dark: #1a73e8;  /* Darker Blue */
+    --secondary-color: #ea4335; /* Vibrant Red Accent */
+    --accent-color: #fbbc05;  /* Vibrant Yellow/Warning */
+    --background-light: #f5f5f5; /* Cool Light Gray */
+    --background-white: #ffffff; /* Pure white */
+    --text-primary: #1f1f1f; /* Nearly Black for high contrast */
+    --text-secondary: #5f6368; /* Standard Gray */
+    --text-muted: #9aa0a6; /* Lighter Muted Gray */
+    --border-color: #dadce0; /* Subtle but visible border */
+    
+    /* Shadows - Adjusted for a much sharper, higher-contrast look */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Added value for new styles */
+    
+    /* Spacing & Radius */
+    --border-radius: 4px; /* Sharper, modern corners */
+    --border-radius-sm: 2px; /* Minimal radius for buttons */
+    
+    /* Transition - Snappier */
+    --transition: all 0.15s ease-out;
+
+    /* NEW TOKENS - Values adjusted for light theme consistency */
+    --fs-base: 18px; /* Slightly larger base font */
+    --fs-scale: 1.125rem; /* Larger scale unit */
+    --color-bg: #f8f8f8; /* Very light, slightly warmer gray */
+    --color-surface: #ffffff; /* Pure white */
+    --color-text: #171717; /* Darker black */
+    --radius: 8px; /* Slightly larger radius for the new block's elements */
+    --gap: 2rem; /* Larger primary gap */
+}
+
+/* Body - Only values changed */
+body{
+    font-family: var(--font-sans);
+    
+    margin: 0;
+    font-family: var(--font-sans); /* Changed font stack value */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--background-light); /* Changed background value to solid color */
+    color: var(--text-primary);
+    line-height: 1.65; /* Slightly looser line-height for sans-serif readability */
+    min-height: 100vh;
+
+}
+
+/* Code - Only values changed */
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace; /* Changed font stack value */
+    background-color: #eeeeee; /* Neutral light gray code background */
+    padding: 4px 8px; /* Adjusted padding */
+    border-radius: 4px; /* Smaller radius to match design */
+    font-size: 0.9em; /* Slightly larger font size */
+}
+
+/* Uphome - Only values changed */
+.uphome {
+    background: transparent;
+    width: 100%;
+    max-width: 1120px; /* Reduced max width */
+    margin: 0 auto;
+    padding: 0 2rem; /* Increased padding */
+}
+
+/* Modern button styles - Only values changed */
+.btn-primary {
+    background: var(--primary-dark); /* Changed gradient to solid dark color */
+    color: white;
+    border: none;
+    padding: 12px 24px; /* Increased padding */
+    border-radius: var(--border-radius-sm);
+    font-weight: 600; /* Reduced font weight */
+    font-size: 0.95rem; /* Slightly smaller font size */
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: none; /* Removed initial shadow */
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px); /* Increased movement */
+    box-shadow: var(--shadow-sm); /* Use smaller shadow on hover */
+    background: var(--primary-color); /* Used lighter color on hover */
+}
+
+.btn-secondary {
+    background: var(--background-white);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color); /* Thicker border */
+    padding: 10px 22px; /* Adjusted padding to match primary */
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary-dark);
+    color: var(--primary-dark); /* Darker color on hover */
+    transform: scale(1.02); /* Subtle scale movement */
+    box-shadow: none; /* Removed shadow on hover */
+}
+
+/* Card styles - Only values changed */
+.card {
+    background: var(--background-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md); /* Increased initial shadow */
+    transition: var(--transition);
+    border: 1px solid #f5f5f5; /* Softer internal border */
+    padding: 32px; /* Increased padding value */
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px); /* More dynamic lift */
+}
+
+/* Typography improvements - Only values changed */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 800; /* Extra bold headings */
+    line-height: 1.2; /* Slightly looser line height */
+    margin-bottom: 0.6em; /* Tighter bottom margin */
+}
+
+h1 {
+    font-size: 3.2rem; /* Larger font size */
+    background: linear-gradient(45deg, var(--primary-dark), var(--secondary-color)); /* New gradient angle and colors */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 2.4rem; /* Larger font size */
+}
+
+h3 {
+    font-size: 1.75rem; /* Larger font size */
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem; /* Increased bottom margin for better spacing */
+}
+
+/* Responsive design - Only values changed */
+@media (max-width: 768px) { /* Changed breakpoint value */
+    .uphome {
+        padding: 0 1.25rem;
+    }
+    
+    h1 {
+        font-size: 2.8rem; /* Adjusted responsive font size */
+    }
+    
+    h2 {
+        font-size: 2rem; /* Adjusted responsive font size */
+    }
+}
+
+/* --- Modernized design tokens added by assistant --- */
+
+/* Modern Authentication Pages Styling - Only values changed */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--background-light) 0%, #ebebeb 100%); /* Changed background gradient to light theme */
+    padding: 3rem; /* Increased padding */
+}
+
+.sign-in-container {
+    background: var(--background-white);
+    border-radius: var(--radius); /* Using new, larger radius */
+    box-shadow: var(--shadow-xl); /* Using new larger shadow */
+    padding: 3.5rem; /* Increased padding */
+    width: 100%;
+    max-width: 400px; /* Reduced max width */
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(5px); /* Reduced blur effect */
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem; /* Increased margin */
+}
+
+.auth-header h1 {
+    font-size: 2.25rem; /* Reduced font size */
+    font-weight: 800; /* Bolder weight */
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color)); /* Used existing primary/secondary colors */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.25rem 0; /* Tighter margin */
+}
+
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 1rem; /* Reduced font size */
+    margin: 0;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Reduced gap */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem; /* Reduced gap */
+}
+
+.form-label {
+    font-weight: 700; /* Bolder weight */
+    color: var(--text-primary);
+    font-size: 0.85rem; /* Smaller font size */
+}
+
+.form-input {
+    padding: 0.8rem 1rem; /* Reduced padding */
+    border: 1px solid var(--border-color); /* Thinner border */
+    border-radius: var(--border-radius); /* Using main radius */
+    font-size: 0.95rem; /* Smaller font size */
+    transition: var(--transition);
+    background: var(--background-white);
+    color: var(--text-primary);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.2); /* Clearer focus ring using primary color */
+}
+
+.form-input::placeholder {
+    color: var(--text-muted); /* Used muted text color */
+}
+
+.auth-button {
+    background: var(--primary-dark); /* Changed gradient to solid dark primary */
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem; /* Adjusted padding */
+    border-radius: var(--border-radius); /* Using main radius */
+    font-weight: 800; /* Extra bold */
+    font-size: 1rem; /* Reduced font size */
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.75rem; /* Increased top margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px; /* Increased min-height */
+    width: 100%;
+}
+
+.auth-button:hover {
+    transform: translateY(-3px); /* Increased lift */
+    box-shadow: var(--shadow-md); /* Used medium shadow */
+}
+
+.auth-button:active {
+    transform: translateY(-1px);
+}
+
+.auth-button:disabled {
+    opacity: 0.5; /* Increased opacity for disabled state */
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.auth-button:disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0; /* Reduced margin */
+    color: var(--text-muted); /* Used muted text color */
+    font-size: 0.85rem; /* Smaller font size */
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.auth-divider::before {
+    margin-right: 0.75rem; /* Reduced margin */
+}
+
+.auth-divider::after {
+    margin-left: 0.75rem; /* Reduced margin */
+}
+
+.auth-link-button {
+    background: #f7f9fa; /* Slightly off-white background */
+    color: var(--text-secondary); /* Used secondary text color */
+    border: 1px solid var(--border-color); /* Thinner border */
+    padding: 0.8rem 1.5rem; /* Reduced padding */
+    border-radius: var(--border-radius); /* Used main radius */
+    font-weight: 700; /* Bolder weight */
+    font-size: 0.95rem; /* Smaller font size */
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.auth-link-button:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-dark); /* Used darker primary color */
+    background: var(--background-white);
+    transform: translateY(-2px); /* Increased lift */
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem; /* Reduced top margin */
+    padding-top: 1.5rem; /* Reduced top padding */
+    border-top: 1px solid var(--border-color);
+}
+
+.auth-footer p {
+    color: var(--text-muted); /* Used muted text color */
+    margin: 0 0 0.5rem 0; /* Tighter margin */
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: underline; /* Added underline */
+    font-weight: 700; /* Bolder weight */
+}
+
+.auth-footer a:hover {
+    text-decoration: none; /* Removed underline on hover */
+}
+
+.error-message {
+    background: #fff5f5; /* Light red background */
+    border: 1px solid #ffcccb; /* Subtle red border */
+    color: #d90f0f; /* Dark red text */
+    padding: 1rem 1.25rem; /* Adjusted padding */
+    border-radius: var(--border-radius); /* Used main radius */
+    font-size: 0.9rem; /* Smaller font size */
+    margin-bottom: 1.25rem; /* Increased bottom margin */
+}
+
+.success-message {
+    background: #f0fdfa; /* Light green background */
+    border: 1px solid #6ee7b7; /* Subtle green border */
+    color: #059669; /* Dark green text */
+    padding: 1rem 1.25rem; /* Adjusted padding */
+    border-radius: var(--border-radius); /* Used main radius */
+    font-size: 0.9rem; /* Smaller font size */
+    margin-bottom: 1.25rem; /* Increased bottom margin */
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 14px; /* Increased size */
+    height: 14px; /* Increased size */
+    border: 3px solid rgba(255, 255, 255, 0.4); /* Thicker, slightly more opaque border */
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s ease-in-out infinite; /* Faster animation */
+    margin-right: 0.75rem; /* Increased margin */
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Design - Only values changed */
+@media (max-width: 768px) {
+    .auth-page {
+        padding: 2rem; /* Increased padding */
+    }
+
+    .sign-in-container {
+        padding: 2.5rem; /* Adjusted padding */
+        max-width: 100%;
+    }
+
+    .auth-header h1 {
+        font-size: 2rem;
+    }
+
+    .form-input {
+        padding: 0.75rem 1rem; /* Adjusted padding */
+    }
+
+    .auth-button {
+        padding: 0.9rem 1.5rem; /* Adjusted padding */
+        font-size: 0.95rem; /* Adjusted font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .sign-in-container {
+        padding: 1.5rem;
+    }
+
+    .auth-header h1 {
+        font-size: 1.6rem; /* Smaller font size */
+    }
+
+    .auth-form {
+        gap: 0.75rem; /* Smaller gap */
+    }
+}
+
+body{
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: 1.65; /* Looser line height */
+    background: linear-gradient(180deg, var(--color-bg) 0%, #f0f0f0 100%); /* Light background gradient */
+    color: var(--color-text);
+    margin:0;
+    padding:0;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+
+
+.btn{
+    display:inline-block;
+    padding:0.75rem 1.25rem; /* Adjusted padding */
+    border-radius: var(--border-radius); /* Used main radius variable */
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-dark)); /* Used existing primary colors */
+    color: white;
+    border:none;
+    cursor:pointer;
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease; /* Adjusted transition values */
+    box-shadow: 0 8px 25px rgba(26,115,232,0.4); /* Used primary color for shadow */
+    text-decoration:none;
+}
+.btn:hover{ transform: translateY(-4px); opacity:1; } /* Increased movement */
+.btn:active{ transform: translateY(-2px); } /* Increased movement */
