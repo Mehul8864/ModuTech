@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/", getGadgets);
 router.get("/:id", getGadget);
-router.post("/", createGadget);
+router.post("/upload", createGadget);
 // router.post("/create-checkout-session", async (req, res) => {
 //     const { products } = req.body;
 //     const lineItems = products.map((product) => ({

@@ -9,7 +9,7 @@ import multer from "multer";
 import admin from "firebase-admin";
 import mongoose from "mongoose";
 import cors from "cors";
-import gadgetRoutes from "./routes/gadgets.js";
+import router from "./routes/gadgets.js";
 import Stripe from "stripe";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
@@ -165,7 +165,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 /* -----------------------------
    API Routes
 ------------------------------ */
-app.use("/gadgets", gadgetRoutes);
+app.use("/gadgets", router);
 
 /* -----------------------------
    MongoDB connection + server

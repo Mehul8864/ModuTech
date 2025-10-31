@@ -1,13 +1,13 @@
 import express from "express";
 import Gadgets from "../models/Gadgets.js";
-import { exportedUrl } from "../index.js";
+// import { exportedUrl } from "../index.js";
 const router = express.Router();
 
 export const createGadget = async (req, res) => {
     const gadget = req.body;
     const newGadget = new Gadgets({
         ...gadget,
-        imageUrl: exportedUrl,
+        imageUrl:"https://th.bing.com/th/id/OIP.mhDR7tIAfySiInP3AB1QLAHaHM?w=185&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
     });
     try {
         await newGadget.save();

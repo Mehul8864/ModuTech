@@ -50,7 +50,7 @@ const useFormFunctions = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:5001/upload",
+                "http://localhost:5001/gadgets/upload",
                 formData
             );
             console.log("Image URL:", response.data.imageUrl);
