@@ -1,23 +1,43 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+// src/firebase.js
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+/**
+ * Read config from environment variables.
+ * - For Create React App use REACT_APP_FIREBASE_*
+ * - For Vite use VITE_FIREBASE_*
+ * - For Next.js use NEXT_PUBLIC_FIREBASE_*
+ */
 const firebaseConfig = {
-    apiKey: "AIzaSyBvOHhfTBulm56JiUSIVJ_MYWAixIMDOH8",
-    authDomain: "gadgetry.firebaseapp.com",
-    projectId: "gadgetry",
-    storageBucket: "gadgetry.appspot.com",
-    messagingSenderId: "377269523293",
-    appId: "1:377269523293:web:a4263e6bcabb17c41f0eb4",
-    measurementId: "G-1EVFT40GK4",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY,
+  authDomain:
+    process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId:
+    process.env.REACT_APP_FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket:
+    process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:
+    process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID ||
+    process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || process.env.VITE_FIREBASE_APP_ID,
+  measurementId:
+    process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || process.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Basic runtime check (only helpful in dev)
+if (
+  process.env.NODE_ENV === "development" &&
+  !firebaseConfig.apiKey
+) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    "Firebase API key not found in environment. Make sure to set REACT_APP_FIREBASE_* or VITE_FIREBASE_* variables."
+  );
+}
 
-//Initialise Firebase Authentication and get a reference to the service
+// Prevent initializing the app more than once (works with HMR)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+// Export auth and app for use across the app
 export const auth = getAuth(app);
+export default app;
