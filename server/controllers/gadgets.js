@@ -33,6 +33,14 @@ function pickAllowedFields(body = {}) {
 }
 
 /**
+ * Helper: safe parse integer with defaults
+ */
+function parsePositiveInt(value, fallback) {
+  const n = parseInt(value, 10);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+
+/**
  * POST /api/gadgets
  * Create a new gadget.
  * Accepts JSON body. If `req.files.image` is present, you can upload it to Cloudinary
@@ -49,6 +57,12 @@ export const createGadget = async (req, res) => {
         .json({ success: false, message: "Missing or invalid 'name' field" });
     }
 
+    if (payload.price != null && isNaN(Number(payload.price))) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid 'price' field; must be a number" });
+    }
+
     // Resolve image URL:
     // 1) use explicit payload.imageUrl
     // 2) if file uploaded at req.files.image -> (optional) upload to cloudinary
@@ -58,14 +72,17 @@ export const createGadget = async (req, res) => {
     if (req.files && req.files.image) {
       // Example placeholder for file upload handling. Implement uploadToCloudinary to enable.
       // try {
-      //   const uploadResult = await uploadToCloudinary(req.files.image.tempFilePath);
-      //   if (uploadResult && uploadResult.secure_url) {
-      //     imageUrl = uploadResult.secure_url;
+      //   // many file middlewares expose a tempFilePath; adjust to your middleware
+      //   const tempPath = req.files.image.tempFilePath || req.files.image.path || null;
+      //   if (tempPath && uploadToCloudinary) {
+      //     const uploadResult = await uploadToCloudinary(tempPath);
+      //     if (uploadResult && uploadResult.secure_url) {
+      //       imageUrl = uploadResult.secure_url;
+      //     }
       //   }
       // } catch (uploadErr) {
       //   console.warn("cloudinary upload failed, using fallback imageUrl", uploadErr);
       // }
-      // NOTE: If you don't have tempFilePath (depends on your file middleware), adapt accordingly.
     }
 
     // Build final doc using whitelisted fields
@@ -91,12 +108,44 @@ export const createGadget = async (req, res) => {
 
 /**
  * GET /api/gadgets
- * Return all gadgets (newest first).
+ * Return gadgets with optional pagination, category filter and search (name/description).
+ * Query params:
+ *   - page (default 1)
+ *   - pageSize (default 20)
+ *   - category
+ *   - search (text search on name/description)
  */
 export const getGadgets = async (req, res) => {
   try {
-    const gadgets = await Gadgets.find().sort({ createdAt: -1 });
-    return res.status(200).json({ success: true, data: gadgets });
+    const page = parsePositiveInt(req.query.page, 1);
+    const pageSize = parsePositiveInt(req.query.pageSize, 20);
+    const category = req.query.category;
+    const search = req.query.search;
+
+    const filter = {};
+    if (category) filter.category = category;
+    if (search) {
+      // simple case-insensitive partial match on name or description
+      const re = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+      filter.$or = [{ name: re }, { description: re }];
+    }
+
+    const total = await Gadgets.countDocuments(filter);
+    const gadgets = await Gadgets.find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    return res.status(200).json({
+      success: true,
+      data: gadgets,
+      meta: {
+        total,
+        page,
+        pageSize,
+        totalPages: Math.ceil(total / pageSize),
+      },
+    });
   } catch (error) {
     console.error("getGadgets error:", error);
     return res.status(500).json({ success: false, message: error.message || "Server error" });
@@ -126,9 +175,69 @@ export const getGadget = async (req, res) => {
   }
 };
 
+/**
+ * PATCH /api/gadgets/:id
+ * Partial update of gadget using whitelisted fields only.
+ */
+export const updateGadget = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, message: "Invalid gadget id" });
+  }
+
+  try {
+    const payload = pickAllowedFields(req.body || {});
+    if (Object.keys(payload).length === 0 && !(req.files && req.files.image)) {
+      return res.status(400).json({ success: false, message: "No updatable fields provided" });
+    }
+
+    // if file provided, handle optional upload (placeholder)
+    if (req.files && req.files.image) {
+      // try { ...uploadToCloudinary... } catch {}
+      // if successful set payload.imageUrl = secure_url
+    }
+
+    const updated = await Gadgets.findByIdAndUpdate(id, { $set: payload }, { new: true, runValidators: true });
+    if (!updated) {
+      return res.status(404).json({ success: false, message: "Gadget not found" });
+    }
+    return res.status(200).json({ success: true, data: updated });
+  } catch (error) {
+    console.error("updateGadget error:", error);
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ success: false, message: error.message, errors: error.errors });
+    }
+    return res.status(500).json({ success: false, message: error.message || "Server error" });
+  }
+};
+
+/**
+ * DELETE /api/gadgets/:id
+ * Delete a gadget by id.
+ */
+export const deleteGadget = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, message: "Invalid gadget id" });
+  }
+
+  try {
+    const deleted = await Gadgets.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: "Gadget not found" });
+    }
+    return res.status(200).json({ success: true, message: "Gadget deleted", data: deleted });
+  } catch (error) {
+    console.error("deleteGadget error:", error);
+    return res.status(500).json({ success: false, message: error.message || "Server error" });
+  }
+};
+
 // attach routes
 router.post("/", createGadget);
 router.get("/", getGadgets);
 router.get("/:id", getGadget);
+router.patch("/:id", updateGadget);
+router.delete("/:id", deleteGadget);
 
 export default router;
