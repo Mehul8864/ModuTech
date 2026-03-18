@@ -236,3 +236,12 @@ router.patch("/:id", updateGadget);
 router.delete("/:id", deleteGadget);
 
 export default router;
+#include<bist/stdc++.h> 
+using namespace std;
+
+int MediaDeviceInfo(){
+  ios::
+
+
+  
+}
