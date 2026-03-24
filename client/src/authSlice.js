@@ -1,13 +1,18 @@
 // authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
+const STORAGE_KEY = "user";
+
 const loadUserFromStorage = () => {
   try {
     if (typeof window === "undefined") return null;
-    const raw = localStorage.getItem("user");
-    return raw ? JSON.parse(raw) : null;
-  } catch (err) {
-    console.warn("Failed to load user from localStorage:", err);
+
+    const rawUser = localStorage.getItem(STORAGE_KEY);
+    if (!rawUser) return null;
+
+    return JSON.parse(rawUser);
+  } catch (error) {
+    console.warn("Failed to load user from localStorage:", error);
     return null;
   }
 };
@@ -15,13 +20,14 @@ const loadUserFromStorage = () => {
 const saveUserToStorage = (user) => {
   try {
     if (typeof window === "undefined") return;
-    if (user === null) {
-      localStorage.removeItem("user");
+
+    if (user) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     } else {
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.removeItem(STORAGE_KEY);
     }
-  } catch (err) {
-    console.warn("Failed to save user to localStorage:", err);
+  } catch (error) {
+    console.warn("Failed to save user to localStorage:", error);
   }
 };
 
@@ -29,7 +35,7 @@ const initialState = {
   user: loadUserFromStorage(),
 };
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -46,10 +52,6 @@ export const authSlice = createSlice({
 
 export const { setUser, clearUser } = authSlice.actions;
 
-/**
- * Safe selector for user - returns null if auth slice or user is missing.
- * Usage: useSelector(selectUser)
- */
 export const selectUser = (state) => state?.auth?.user ?? null;
 
 export default authSlice.reducer;
