@@ -1,165 +1,172 @@
-About
+# Gadgetry
 
-ModuTech is a modular platform that provides reusable building blocks (modules) to accelerate development of web and backend services. Each module focuses on a single responsibility — authentication, user profiles, billing, notifications, etc. — making the system easy to extend, test, and deploy.
+An e-commerce web app for browsing, listing, and buying gadgets. Built with React, Redux, Node.js, Express, MongoDB, Firebase Auth, and Stripe.
 
-Use ModuTech as a starting point for microservices, a monorepo of shared libraries, or a reference architecture for production-ready systems.
+---
 
-Features
+## Tech Stack
 
-Modular design: plug-and-play modules with clear boundaries
+| Layer | Tech |
+|-------|------|
+| Frontend | React 18, Redux Toolkit, React Router v6, Material UI, Axios |
+| Backend | Node.js, Express, Mongoose |
+| Database | MongoDB (local or Atlas) |
+| Auth | Firebase Authentication |
+| Payments | Stripe |
+| Image Upload | Firebase Storage |
 
-Authentication & authorization (JWT / OAuth)
+---
 
-User and role management
+## Project Structure
 
-RESTful API and optional GraphQL layer
+```
+ModuTech/
+├── client/          # React frontend (port 3000)
+│   ├── src/
+│   │   ├── Components/
+│   │   ├── actions/
+│   │   ├── reducers/
+│   │   ├── api/
+│   │   ├── firebase.js
+│   │   └── authSlice.js
+│   └── .env         # Firebase config (see below)
+└── server/          # Express backend (port 5001)
+    ├── controllers/
+    ├── models/
+    ├── routes/
+    └── .env         # MongoDB URI, Stripe key, etc.
+```
 
-Background jobs & task queues
+---
 
-Observability: logging, metrics, health checks
+## Prerequisites
 
-Docker and Docker Compose for local development
+- Node.js >= 18
+- MongoDB installed locally **or** a MongoDB Atlas cluster
+- A Firebase project with Authentication enabled
+- (Optional) A Stripe account for payments
 
-Seed & migration scripts for databases
+---
 
-(Customize the features list to match the modules included in your project.)
+## Getting Started
 
-Architecture & Tech Stack
+### 1. Clone the repo
 
-Below is a suggested stack. Replace the items with the actual technologies used in your repo.
-
-Monorepo / Modules: Nx / Turborepo / Lerna (or handcrafted folder structure)
-
-Backend: Node.js + TypeScript (Express / NestJS) or Python (FastAPI)
-
-Frontend: React (Create React App / Next.js) or Vue
-
-Database: PostgreSQL
-
-Queue & Cache: Redis / BullMQ
-
-Storage: AWS S3 (or MinIO for local testing)
-
-CI/CD: GitHub Actions
-
-Containerization: Docker & Docker Compose
-
-Quick Start
-
-These commands use typical folder names; adjust if your repo differs.
-
-Prerequisites
-
-Node.js LTS (>= 18)
-
-Docker & Docker Compose (recommended)
-
-PostgreSQL (if not using Docker)
-
-Clone
-git clone https://github.com/<your-username>/ModuTech.git
+```bash
+git clone https://github.com/your-username/ModuTech.git
 cd ModuTech
-Using Docker (recommended)
-docker-compose up --build
+```
 
-This starts services such as api, worker, db, and redis depending on your docker-compose.yml.
+### 2. Set up the backend
 
-Without Docker
-
-Start the database and Redis separately, then run services:
-
-# Install dependencies
-# For backend
-cd packages/api
+```bash
+cd server
 npm install
-npm run dev
+```
 
+Edit `server/.env`:
 
-# For frontend (if present)
-cd ../../packages/web
+```env
+PORT=5001
+MONGO_URI=mongodb://127.0.0.1:27017/Gadgets
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+FIREBASE_STORAGE_BUCKET=gs://your-project.appspot.com
+GOOGLE_SERVICE_ACCOUNT_PATH=./serviceAccount.json
+```
+
+Start the server:
+
+```bash
+node index.js
+```
+
+### 3. Set up the frontend
+
+```bash
+cd client
 npm install
-npm run dev
-Environment Variables
+```
 
-Create a .env file for each service (e.g., api/.env, worker/.env). Example for the API:
+Create `client/.env` with your Firebase project config (find it in Firebase Console → Project Settings → Your apps):
 
-PORT=4000
-NODE_ENV=development
-DATABASE_URL=postgresql://postgres:password@localhost:5432/modutech
-JWT_SECRET=change_this_to_a_secure_value
-REDIS_URL=redis://localhost:6379
-S3_BUCKET=modutech-dev
-S3_ACCESS_KEY=xxx
-S3_SECRET_KEY=xxx
+```env
+REACT_APP_FIREBASE_API_KEY=AIzaSy...
+REACT_APP_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=123456789
+REACT_APP_FIREBASE_APP_ID=1:123:web:abc123
+```
 
-Add a .env.example to the repo so contributors know which keys are required.
+Start the frontend:
 
-Database & Migrations
+```bash
+npm start
+```
 
-If using an ORM (Prisma, TypeORM, Sequelize, etc.), include your migration commands here. Example (Prisma):
+### 4. Start MongoDB (if running locally)
 
-# generate and run migrations
-npx prisma migrate dev --name init
-# seed database
-npm run seed
+```bash
+mongod --dbpath "C:/data/db"
+```
 
-If using SQL migration files, show the CLI commands used to apply them.
+---
 
-Running Tests
+## API Endpoints
 
-Put your test commands here. Recommended frameworks: Jest (backend), Vitest, React Testing Library, Playwright/Cypress for e2e.
+Base URL: `http://localhost:5001`
 
-# backend tests
-cd packages/api
-npm test
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/gadgets` | List all gadgets (supports `?page`, `?pageSize`, `?search`, `?category`) |
+| GET | `/gadgets/:id` | Get a single gadget |
+| POST | `/gadgets` | Create a new gadget |
+| PATCH | `/gadgets/:id` | Update a gadget |
+| DELETE | `/gadgets/:id` | Delete a gadget |
+| POST | `/upload` | Upload an image to Firebase Storage |
+| POST | `/payment` | Process a Stripe payment |
 
+---
 
-# frontend tests
-cd ../web
-npm test
+## Features
 
-Aim to keep tests fast and isolated per module.
+- Browse and search gadgets
+- Create and manage gadget listings
+- Firebase email/password authentication
+- Like/wishlist gadgets (persisted in Redux)
+- Shopping cart
+- Stripe checkout for purchases
+- Image upload via Firebase Storage
 
-Linting & Formatting
+---
 
-Standardize code style with ESLint and Prettier. Example scripts:
+## Environment Variables Reference
 
-# run once
-npm run lint
-npm run format
+### `server/.env`
 
+| Key | Description |
+|-----|-------------|
+| `PORT` | Server port (default `5001`) |
+| `MONGO_URI` | MongoDB connection string |
+| `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_...`) |
+| `FIREBASE_STORAGE_BUCKET` | Firebase storage bucket URL |
+| `GOOGLE_SERVICE_ACCOUNT_PATH` | Path to Firebase service account JSON |
 
-# or via workspace root
-npm run workspace:lint
+### `client/.env`
 
-Add Husky + lint-staged to run checks before commits.
+| Key | Description |
+|-----|-------------|
+| `REACT_APP_FIREBASE_API_KEY` | Firebase API key |
+| `REACT_APP_FIREBASE_AUTH_DOMAIN` | Firebase auth domain |
+| `REACT_APP_FIREBASE_PROJECT_ID` | Firebase project ID |
+| `REACT_APP_FIREBASE_STORAGE_BUCKET` | Firebase storage bucket |
+| `REACT_APP_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID |
+| `REACT_APP_FIREBASE_APP_ID` | Firebase app ID |
 
-Deployment
+---
 
-High-level checklist for production readiness:
+## Notes
 
-Build optimized production images for services.
-
-Store secrets in a secrets manager (AWS Secrets Manager, HashiCorp Vault).
-
-Run DB migrations during deployment.
-
-Use a load balancer and deploy services across multiple instances.
-
-Configure monitoring and alerting (Prometheus, Grafana, Sentry).
-
-Example Docker-based build:
-
-docker build -t yourname/modutech-api:latest ./packages/api
-docker push yourname/modutech-api:latest
-CI / CD
-
-Use GitHub Actions (or your preferred runner) to:
-
-Run tests and linters on PRs
-
-Build and publish Docker images on merging to main/master
-
-Run migration jobs on deployment
-
-Add status badges once workflows are configured.
+- After editing `client/.env`, restart the React dev server — CRA only reads env vars on startup.
+- The `client/.env` and `server/.env` files are gitignored. Never commit real API keys.
+- Firebase Auth errors (`auth/invalid-api-key`) mean the `REACT_APP_FIREBASE_*` vars are missing or incorrect.
