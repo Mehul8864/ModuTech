@@ -20,10 +20,9 @@ const gadgetSchema = new mongoose.Schema(
       default: "",
     },
     creator: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-      index: true,
+      type: String,
+      trim: true,
+      default: "",
     },
     imageUrl: {
       type: String,
@@ -31,9 +30,7 @@ const gadgetSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 gadgetSchema.index({ createdAt: -1 });
@@ -46,5 +43,4 @@ gadgetSchema.set("toJSON", {
 });
 
 const Gadget = mongoose.model("Gadget", gadgetSchema);
-
 export default Gadget;

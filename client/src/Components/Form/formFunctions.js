@@ -108,7 +108,7 @@ const useFormFunctions = () => {
         headers.Authorization = `Bearer ${token}`;
       }
 
-      const response = await axios.post(`${API_BASE}/gadgets/upload`, formData, {
+      const response = await axios.post(`${API_BASE}/upload`, formData, {
         headers,
       });
 
